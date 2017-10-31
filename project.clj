@@ -1,10 +1,10 @@
-(defproject stechuhr "0.1.0-SNAPSHOT"
+(defproject presencepeelr "0.1.0-SNAPSHOT"
 
   :description "Time tracking application using replikativ."
 
-  :url "http://github.com/kordano/stechuhr"
+  :url "http://github.com/grischoun/presencepeelr"
 
-  :main stechuhr.core
+  :main presencepeelr.core
 
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -38,16 +38,16 @@
                 ;; the presence of a :figwheel configuration here
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
-                :figwheel {:on-jsload "stechuhr.core/on-js-reload"
+                :figwheel {:on-jsload "presencepeelr.core/on-js-reload"
                            ;; :open-urls will pop open your application
                            ;; in the default browser once Figwheel has
                            ;; started and complied your application.
                            ;; Comment this out once it no longer serves you.
                            :open-urls ["http://localhost:3449/index.html"]}
 
-                :compiler {:main stechuhr.core
+                :compiler {:main presencepeelr.core
                            :asset-path "js/compiled/out"
-                           :output-to "resources/public/js/compiled/stechuhr.js"
+                           :output-to "resources/public/js/compiled/presencepeelr.js"
                            :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
@@ -58,10 +58,10 @@
                ;; lein cljsbuild once min
                {:id "min"
                 :source-paths ["src/cljs"]
-                :compiler {:output-to "resources/public/js/compiled/stechuhr.js"
+                :compiler {:output-to "resources/public/js/compiled/presencepeelr.js"
                            :output-dir "resources/public/js/compiled/min"
                            :asset-path "js/compiled/min"
-                           :main stechuhr.core
+                           :main presencepeelr.core
                            :optimizations :whitespace
                            :pretty-print false}}]}
 
