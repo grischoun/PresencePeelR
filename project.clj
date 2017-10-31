@@ -23,9 +23,9 @@
             [lein-sassy "1.0.8"]
             [lein-cljsbuild "1.1.4" :exclusions [[org.clojure/clojure]]]]
 
-  :sass {:src "resources/app/stylesheets"
-         :dst "resources/public/css/"}
-  :hooks [leiningen.sass]
+  ;; :sass {:src "resources/app/stylesheets"
+  ;;        :dst "resources/public/css/"}
+  ;; :hooks [leiningen.sass]
 
   :source-paths ["src/cljs" "src/clj"]
 
