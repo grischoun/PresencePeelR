@@ -72,40 +72,40 @@
     [this]
     (om/set-state! this {:input-event ""
                          :input-date    ""
-                         :input-capture ""}))
+                         :input-presences ""}))
   (render [this]
-    (let [{:keys [input-event input-date input-capture]} (om/get-state this)
+    (let [{:keys [input-event input-date input-presences]} (om/get-state this)
           {:keys [captures]}                               (om/props this)]
       (html
        [:div
         [:div.widget
          [:h1 "PresencePeelR"]
          (input-widget this "Event" :input-event)
-         (input-widget this "Date" :input-date)
-         (input-widget this "Capture" :input-capture)
+         (input-widget this "Start Date-Time" :input-date)
+         (input-widget this "Presences" :input-presences)
          [:button
           {:on-click (fn [_]
                        (let [new-capture {:event input-event
                                           :date    input-date
-                                          :capture input-capture}]
+                                          :presences input-presences}]
                          (do
                            (add-capture! replikativ-state new-capture)
                            (om/update-state! this assoc :input-event "")
                            (om/update-state! this assoc :input-date "")
-                           (om/update-state! this assoc :input-capture ""))))}
+                           (om/update-state! this assoc :input-presences ""))))}
           "Add"]]
         [:div.widget
          [:table
           [:tr
            [:th "Event"]
            [:th "Date"]
-           [:th "Capture"]]
+           [:th "Presences"]]
           (mapv
-           (fn [{:keys [event date capture]}]
+           (fn [{:keys [event date presences]}]
              [:tr
               [:td event]
               [:td date]
-              [:td capture]])
+              [:td presences]])
            captures)]]]))))
 
 
