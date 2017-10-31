@@ -1,4 +1,4 @@
-(ns stechuhr.core
+(ns presencepeelr.core
   (:require [konserve.memory :refer [new-mem-store]]
             [replikativ.peer :refer [client-peer]]
             [replikativ.stage :refer [create-stage! connect! subscribe-crdts!]]
@@ -16,7 +16,7 @@
 
 (enable-console-print!)
 
-(def user "mail:alice@stechuhr.de")
+(def user "mail:admin@presencepeelr.ch")
 
 (def ormap-id #uuid "07f6aae2-2b46-4e44-bfd8-058d13977a8a")
 
@@ -109,7 +109,7 @@
 
 (defn main [& args]
   (go-try S (def replikativ-state (<? S (setup-replikativ))))
-  (.error js/console "Stechuhr connected ...."))
+  (.error js/console "Presencepeelr connected ...."))
 
 (def reconciler
   (om/reconciler {:state val-atom}))

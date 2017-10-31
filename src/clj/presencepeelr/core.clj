@@ -1,4 +1,4 @@
-( ns stechuhr.core
+( ns presencepeelr.core
   (:require [hasch.core :refer [uuid]]
             [replikativ.peer :refer [server-peer]]
 
@@ -45,7 +45,7 @@
 
 (comment
 
-  
+
   (start-server)
 
   )
