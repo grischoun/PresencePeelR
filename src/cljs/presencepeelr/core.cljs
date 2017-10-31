@@ -79,8 +79,8 @@
       (html
        [:div
         [:div.widget
-         [:h1 "Task Captures"]
-         (input-widget this "Project" :input-project)
+         [:h1 "PresencePeelR"]
+         (input-widget this "Person" :input-project)
          (input-widget this "Task" :input-task)
          (input-widget this "Capture" :input-capture)
          [:button
