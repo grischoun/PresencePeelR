@@ -51,14 +51,16 @@
 (defn add-capture! [state capture]
   (s/assoc! (:stage state)
             [user ormap-id]
-            (uuid capture)
+            ;;(uuid capture)
+            [(:date capture) (:event capture)]
             [['add capture]]))
 
 (defn input-widget [component placeholder local-key]
   [:input {:value       (get (om/get-state component) local-key)
            :placeholder placeholder
            :on-change   (fn [e]
-                          (om/update-state!
+                          (om/update-state! ;; Equivalent to a React setState.
+                                            ;; Here, assoc local-key to the comp.'s val
                            component
                            assoc
                            local-key
