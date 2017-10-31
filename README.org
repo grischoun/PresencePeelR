@@ -1,0 +1,7 @@
+# PresencePeelR
+
+* Start under emacs with 'cider-jack-in-clojurescript
+
+* ? how to show a cljs function's doc in the mini-buffer?
+
+** It works for clojure functions but not for om. And don't know whether it works for ClojureScript functions.

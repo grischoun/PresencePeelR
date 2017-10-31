@@ -1,8 +1,8 @@
-# stechuhr
 
-Rapidly built prototype for simple task tracking and written in Clojure and Clojurescript powered by [replikativ](http://replikativ.io).
+# PresencePeelR
 
-A recorded screencast can be found [here](https://youtu.be/LW8v6Cr9BcM)
+Rapidly built prototype for players presence at an event written in Clojure and Clojurescript powered by [replikativ](http://replikativ.io).
+
 
 ## Usage
 Make sure [leiningen](https://leiningen.org/) is installed:
