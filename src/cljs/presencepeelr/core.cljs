@@ -70,40 +70,40 @@
   Object
   (componentWillMount
     [this]
-    (om/set-state! this {:input-project ""
+    (om/set-state! this {:input-event ""
                          :input-task    ""
                          :input-capture ""}))
   (render [this]
-    (let [{:keys [input-project input-task input-capture]} (om/get-state this)
+    (let [{:keys [input-event input-task input-capture]} (om/get-state this)
           {:keys [captures]}                               (om/props this)]
       (html
        [:div
         [:div.widget
          [:h1 "PresencePeelR"]
-         (input-widget this "Person" :input-project)
+         (input-widget this "Event" :input-event)
          (input-widget this "Task" :input-task)
          (input-widget this "Capture" :input-capture)
          [:button
           {:on-click (fn [_]
-                       (let [new-capture {:project input-project
+                       (let [new-capture {:event input-event
                                           :task    input-task
                                           :capture input-capture}]
                          (do
                            (add-capture! replikativ-state new-capture)
-                           (om/update-state! this assoc :input-project "")
+                           (om/update-state! this assoc :input-event "")
                            (om/update-state! this assoc :input-task "")
                            (om/update-state! this assoc :input-capture ""))))}
           "Add"]]
         [:div.widget
          [:table
           [:tr
-           [:th "Project"]
+           [:th "Event"]
            [:th "Task"]
            [:th "Capture"]]
           (mapv
-           (fn [{:keys [project task capture]}]
+           (fn [{:keys [event task capture]}]
              [:tr
-              [:td project]
+              [:td event]
               [:td task]
               [:td capture]])
            captures)]]]))))
