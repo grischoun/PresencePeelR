@@ -51,9 +51,17 @@
 (defn add-capture! [state capture]
   (s/assoc! (:stage state)
             [user ormap-id]
-            ;;(uuid capture)
             [(:date capture) (:event capture)]
             [['add capture]]))
+
+
+(defn remove-capture! [state capture]
+  (s/dissoc! (:stage state)
+            [user ormap-id]
+            [(:date capture) (:event capture)]
+            [['remove capture]]))
+
+
 
 (defn input-widget [component placeholder local-key]
   [:input {:value       (get (om/get-state component) local-key)
@@ -99,13 +107,25 @@
           [:tr
            [:th "Event"]
            [:th "Date"]
-           [:th "Presences"]]
+           [:th "Presences"]
+           [:th ""]]
           (mapv
            (fn [{:keys [event date presences]}]
              [:tr
               [:td event]
               [:td date]
-              [:td presences]])
+              [:td presences]
+              [:td [:button
+                    {:on-click (fn [_]
+                                 (let [capture {:event     event
+                                                :date      date
+                                                :presences presences}]
+                                   (do
+                                     (remove-capture! replikativ-state capture)
+                                     (om/update-state! this assoc :input-event "")
+                                     (om/update-state! this assoc :input-date "")
+                                     (om/update-state! this assoc :input-presences ""))))}
+                    "Remove"]]])
            captures)]]]))))
 
 
