@@ -18,6 +18,9 @@
 
 (def user "mail:admin@presencepeelr.ch")
 
+;; New id to be used when data structure is ok
+;; (def ormap-id #uuid "0dd1aa20-b358-4f57-aa7b-4fef7721d079")
+
 (def ormap-id #uuid "07f6aae2-2b46-4e44-bfd8-058d13977a8a")
 
 (def uri "ws://127.0.0.1:31778")
@@ -48,17 +51,28 @@
 
 (declare replikativ-state)
 
+(defn create-capture [event date team presences]
+  {:event     event
+   :date      date
+   :team      team
+   :presences presences})
+
+
+(defn capture-key [capture]
+  [(:date capture) (:event capture) (:team capture)])
+
+
 (defn add-capture! [state capture]
   (s/assoc! (:stage state)
             [user ormap-id]
-            [(:date capture) (:event capture)]
+            (capture-key capture)
             [['add capture]]))
 
 
 (defn remove-capture! [state capture]
   (s/dissoc! (:stage state)
             [user ormap-id]
-            [(:date capture) (:event capture)]
+            (capture-key capture)
             [['remove capture]]))
 
 
@@ -68,7 +82,7 @@
            :placeholder placeholder
            :on-change   (fn [e]
                           (om/update-state! ;; Equivalent to a React setState.
-                                            ;; Here, assoc local-key to the comp.'s val
+                           ;; Here, assoc local-key to the comp.'s val
                            component
                            assoc
                            local-key
@@ -77,31 +91,31 @@
 (defui App
   Object
   (componentWillMount
-    [this]
-    (om/set-state! this {:input-event ""
-                         :input-date    ""
-                         :input-presences ""}))
+   [this]
+   (om/set-state! this {:input-event     ""
+                        :input-date      ""
+                        :input-presences ""}))
   (render [this]
-    (let [{:keys [input-event input-date input-presences]} (om/get-state this)
-          {:keys [captures]}                               (om/props this)]
-      (html
-       [:div
-        [:div.widget
-         [:h1 "PresencePeelR"]
-         (input-widget this "Event" :input-event)
-         (input-widget this "Start Date-Time" :input-date)
-         (input-widget this "Presences" :input-presences)
-         [:button
-          {:on-click (fn [_]
-                       (let [new-capture {:event input-event
-                                          :date    input-date
-                                          :presences input-presences}]
-                         (do
-                           (add-capture! replikativ-state new-capture)
-                           (om/update-state! this assoc :input-event "")
-                           (om/update-state! this assoc :input-date "")
-                           (om/update-state! this assoc :input-presences ""))))}
-          "Add"]]
+          (let [{:keys [input-event input-date input-presences]} (om/get-state this)
+                {:keys [captures]}                               (om/props this)]
+            (html
+             [:div
+              [:div.widget
+               [:h1 "PrezPeelR"]
+               (input-widget this "Event" :input-event)
+               (input-widget this "Start Date-Time" :input-date)
+               [:button
+                {:on-click (fn [_]
+                             (let [new-capture (create-capture input-event
+                                                               input-date
+                                                               "Genève Lully"
+                                                               {})]
+                               (do
+                                 (add-capture! replikativ-state new-capture)
+                                 (om/update-state! this assoc :input-event "")
+                                 (om/update-state! this assoc :input-date "")
+                                 (om/update-state! this assoc :input-presences ""))))}
+                "Add"]]
         [:div.widget
          [:table
           [:tr
@@ -110,16 +124,17 @@
            [:th "Presences"]
            [:th ""]]
           (mapv
-           (fn [{:keys [event date presences]}]
+           (fn [{:keys [event date team presences]}]
              [:tr
               [:td event]
               [:td date]
               [:td presences]
               [:td [:button
                     {:on-click (fn [_]
-                                 (let [capture {:event     event
-                                                :date      date
-                                                :presences presences}]
+                                 (let [capture  (create-capture event
+                                                                date
+                                                                team
+                                                                presences)]
                                    (do
                                      (remove-capture! replikativ-state capture)
                                      (om/update-state! this assoc :input-event "")
