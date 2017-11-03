@@ -116,33 +116,33 @@
                                  (om/update-state! this assoc :input-date "")
                                  (om/update-state! this assoc :input-presences ""))))}
                 "Add"]]
-        [:div.widget
-         [:table
-          [:tr
-           [:th "Event"]
-           [:th "Date"]
-           [:th ""]]
-          (mapv
-           (fn [{:keys [event date team presences]}]
-             [[:tr
-                [:td event]
-                [:td date]
-                [:td [:button
-                      {:on-click (fn [_]
-                                   (let [capture (create-capture event
-                                                                 date
-                                                                 team
-                                                                 presences)]
-                                     (do
-                                       (remove-capture! replikativ-state capture)
-                                       (om/update-state! this assoc :input-event "")
-                                       (om/update-state! this assoc :input-date "")
-                                       (om/update-state! this assoc :input-presences ""))))}
-                      "Remove"]]]
-              (input-widget this "Player" :input-player)
-              [:button "Coming"]
-              [:button "Not Sure"]
-              [:button "Not Coming"]])
+              [:div.widget
+               [:table
+                [:tr
+                 [:th "Event"]
+                 [:th "Date"]
+                 [:th ""]]
+                (mapv
+                 (fn [{:keys [event date team presences]}]
+                   [[:tr
+                     [:td event]
+                     [:td date]
+                     [:td [:button
+                           {:on-click (fn [_]
+                                        (let [capture (create-capture event
+                                                                      date
+                                                                      team
+                                                                      presences)]
+                                          (do
+                                            (remove-capture! replikativ-state capture)
+                                            (om/update-state! this assoc :input-event "")
+                                            (om/update-state! this assoc :input-date "")
+                                            (om/update-state! this assoc :input-presences ""))))}
+                           "Remove"]]]
+                    (input-widget this "Player" :input-player)
+                    [:button "Coming"]
+                    [:button "Not Sure"]
+                    [:button "Not Coming"]])
            captures)]]]))))
 
 
