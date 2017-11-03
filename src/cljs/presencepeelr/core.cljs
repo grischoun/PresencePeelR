@@ -132,7 +132,7 @@
               [:div.widget
                [:h2 "Events"]
                (mapv
-                (fn [[[event date team] presences]]
+                (fn [[[date event team] presences]]
                   (let [capture (create-capture event date team presences)]
                     [:div
                      [:table
