@@ -7,7 +7,7 @@
   :main presencepeelr.core
 
   :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+            :url  "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
                  [org.clojure/clojurescript "1.9.229"]
@@ -17,22 +17,29 @@
                  [com.taoensso/timbre "4.10.0"]
                  [http-kit "2.2.0"]
                  [compojure "1.5.2"]
-                 [cheshire "5.7.1"]]
+                 [cheshire "5.7.1"]
+                 [environ "1.0.0"]]
 
   :plugins [[lein-figwheel "0.5.8"]
             [lein-sassy "1.0.8"]
-            [lein-cljsbuild "1.1.4" :exclusions [[org.clojure/clojure]]]]
+            [lein-cljsbuild "1.1.4" :exclusions [[org.clojure/clojure]]]
+            ]
+
+  :uberjar-name "presencepeelr.jar"
 
   ;; :sass {:src "resources/app/stylesheets"
   ;;        :dst "resources/public/css/"}
   ;; :hooks [leiningen.sass]
+
+
+
 
   :source-paths ["src/cljs" "src/clj"]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
   :cljsbuild {:builds
-              [{:id "dev"
+              [{:id           "dev"
                 :source-paths ["src/cljs"]
 
                 ;; the presence of a :figwheel configuration here
@@ -45,25 +52,25 @@
                            ;; Comment this out once it no longer serves you.
                            :open-urls ["http://localhost:3449/index.html"]}
 
-                :compiler {:main presencepeelr.core
-                           :asset-path "js/compiled/out"
-                           :output-to "resources/public/js/compiled/presencepeelr.js"
-                           :output-dir "resources/public/js/compiled/out"
+                :compiler {:main                 presencepeelr.core
+                           :asset-path           "js/compiled/out"
+                           :output-to            "resources/public/js/compiled/presencepeelr.js"
+                           :output-dir           "resources/public/js/compiled/out"
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
                            ;; https://github.com/binaryage/cljs-devtools
-                           :preloads [devtools.preload]}}
+                           :preloads             [devtools.preload]}}
                ;; This next build is an compressed minified build for
                ;; production. You can build this with:
                ;; lein cljsbuild once min
-               {:id "min"
+               {:id           "min"
                 :source-paths ["src/cljs"]
-                :compiler {:output-to "resources/public/js/compiled/presencepeelr.js"
-                           :output-dir "resources/public/js/compiled/min"
-                           :asset-path "js/compiled/min"
-                           :main presencepeelr.core
-                           :optimizations :whitespace
-                           :pretty-print false}}]}
+                :compiler     {:output-to     "resources/public/js/compiled/presencepeelr.js"
+                               :output-dir    "resources/public/js/compiled/min"
+                               :asset-path    "js/compiled/min"
+                               :main          presencepeelr.core
+                               :optimizations :whitespace
+                               :pretty-print  false}}]}
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
              ;; :server-port 3449 ;; default
@@ -100,6 +107,7 @@
              ;; to configure a different figwheel logfile path
              ;; :server-logfile "tmp/logs/figwheel-logfile.log"
              }
+
   :profiles {:dev {:dependencies [[binaryage/devtools "0.8.2"]
                                   [figwheel-sidecar "0.5.8"]
                                   [com.cemerick/piggieback "0.2.1"]]
@@ -108,6 +116,11 @@
                    ;; for CIDER
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
                    :repl-options {; for nREPL dev you really need to limit output
-                                  :init (set! *print-length* 50)
-                                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}}
-  )
+                                  :init             (set! *print-length* 50)
+                                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
+
+             :uberjar {:hooks       [leiningen.cljsbuild]
+                       :env         {:production true}
+                       :aot         :all
+                       :omit-source true
+                       }})

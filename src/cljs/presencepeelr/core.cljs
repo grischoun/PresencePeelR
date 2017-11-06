@@ -32,6 +32,7 @@
 
 (def stream-eval-fns
   {'add    (fn [S a new]
+             (println (str  "%%%%%%%%%%%%%%%%%%%%:" new))
              (swap! a update-in [:captures] (fn [old] (assoc old (capture-key new) (:presences new))))
              a)
    'remove (fn [S a new]
@@ -90,8 +91,7 @@
   [:button
    {:on-click (fn [_]
                 (let [user        (get (om/get-state component) :input-user)
-                      new-capture (update-in capture [:presences]
-                                             assoc user label)]
+                      new-capture (update-in capture [:presences] assoc user label)]
                   (do
                     (add-capture! replikativ-state new-capture))))}
    label])
@@ -130,14 +130,13 @@
                                  (om/update-state! this assoc :input-presences ""))))}
                 "Add"]]
               [:div.widget
-               [:h2 "Events"]
                (mapv
                 (fn [[[date event team] presences]]
                   (let [capture (create-capture event date team presences)]
                     [:div
+                     [:h2 event]
                      [:table
                       [[:tr
-                        [:td event]
                         [:td date]
                         [:td [:button
                               {:on-click
@@ -181,6 +180,21 @@
   (-> val-atom
       deref
       :captures)
+
+  (def a-capture (first (-> val-atom
+                            deref
+                            :captures)))
+
+  (update-in a-capture [:presences]
+             assoc "Paul" "Not Coming")
+
+
+  (def new-capture (create-capture "fdds"
+                                    "fffff"
+                                    "Genève Lully"
+                                    {"" "Allo"}))
+
+  (add-capture! replikativ-state new-capture)
 
   (.log js/console (clj->js stream-eval-fns))
 
