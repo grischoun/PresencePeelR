@@ -48,7 +48,7 @@
     (<?? S (chan))))
 
 (defn -main [& args]
-  (let [port (Integer/parseInt (or (env :port) "8088"))]
+  (let [port (Integer/parseInt (or (env :port) "8090"))]
      (println (str "Http-kit server started on port:" port))
     (start-server port)))
 
