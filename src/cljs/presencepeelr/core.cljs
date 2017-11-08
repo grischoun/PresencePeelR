@@ -135,20 +135,14 @@
                 (fn [[[date event team] presences]]
                   (let [capture (create-capture event date team presences)]
                     [:div
-                     [:h2 event]
-                     [:table
-                      [[:tr
-                        [:td date]
-                        [:td [:button
-                              {:on-click
-                               (fn [_]
-                                 (do
-                                   (remove-capture! replikativ-state capture)
-                                   (om/update-state! this assoc :input-event "")
-                                   (om/update-state! this assoc :input-date "")
-                                   (om/update-state! this assoc :input-presences "")))}
-                              "Remove"]]]
-                       ]]
+                     [:div
+                      [:h2 event " - " date "  "
+                       [:button
+                        {:on-click
+                         (fn [_]
+                           (do
+                             (remove-capture! replikativ-state capture)))}
+                        "Remove"]]]
                      (mapv
                       (fn [[user presence]]
                         [:div
