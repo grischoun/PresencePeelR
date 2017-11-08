@@ -33,10 +33,11 @@
 (def stream-eval-fns
   {'add    (fn [S a new]
              (println (str  "%%%%%%%%%%%%%%%%%%%%:" new))
-             (swap! a update-in [:captures] (fn [old] (assoc old (capture-key new) (:presences new))))
+             (swap! a update-in [:captures] (fn [old] (assoc old (capture-key new)
+                                                             (:presences new))))
              a)
    'remove (fn [S a new]
-             (swap! a update-in [:captures] (fn [old] (set (remove #{new} old))))
+             (swap! a update-in [:captures] (fn [old] (dissoc old (capture-key new))))
              a)})
 
 (defn setup-replikativ []
